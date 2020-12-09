@@ -3,9 +3,13 @@ import { Router } from 'express';
 import CreateUserService from '../services/CreateUserService';
 import ShowUserService from '../services/ShowUserService';
 
+import ensureAuthenticated from '../middlewares/ensureAuthenticated';
+
 const usersRouter = Router();
 
-usersRouter.get('/', async (request, response) => {
+usersRouter.get('/', ensureAuthenticated, async (request, response) => {
+  console.log(request.user);
+
   const { user_id } = request.query;
 
   const showUser = new ShowUserService();
