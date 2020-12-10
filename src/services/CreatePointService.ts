@@ -1,6 +1,7 @@
 import { getRepository } from 'typeorm';
 
 import Point from '../models/Point';
+import AppError from '../errors/AppError';
 
 interface Request {
   image: string;
@@ -31,7 +32,7 @@ class CreatePointService {
     });
 
     if (checkPointExists) {
-      throw new Error('Point already existing.');
+      throw new AppError('Point already existing.');
     }
 
     const point = pointsRepository.create({

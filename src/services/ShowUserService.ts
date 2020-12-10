@@ -1,6 +1,7 @@
 import { getRepository } from 'typeorm';
 
 import User from '../models/User';
+import AppError from '../errors/AppError';
 
 interface Request {
   user_id: string;
@@ -15,7 +16,7 @@ class ShowUserService {
     });
 
     if (!user) {
-      throw new Error('User not found.');
+      throw new AppError('User not found.', 401);
     }
 
     return user;

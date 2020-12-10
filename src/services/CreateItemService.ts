@@ -1,6 +1,7 @@
 import { getRepository } from 'typeorm';
 
 import Item from '../models/Item';
+import AppError from '../errors/AppError';
 
 interface Request {
   image: string;
@@ -16,7 +17,7 @@ class CreateItemService {
     });
 
     if (checkItemExists) {
-      throw new Error('Item already existing.');
+      throw new AppError('Item already existing.');
     }
 
     const item = itemsRepository.create({
