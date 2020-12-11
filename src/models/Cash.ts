@@ -2,29 +2,28 @@ import {
   Column,
   CreateDateColumn,
   Entity,
+  JoinColumn,
   OneToMany,
   PrimaryGeneratedColumn,
   UpdateDateColumn,
 } from 'typeorm';
 
-import Cash from './Cash';
+import User from './User';
 
-@Entity('users')
-class User {
+@Entity('cashes')
+class Cash {
   @PrimaryGeneratedColumn('uuid')
   id: string;
 
   @Column()
-  name: string;
+  user_id: string;
 
-  @Column()
-  email: string;
+  @OneToMany(() => User, user => user.user_cash)
+  @JoinColumn({ name: 'user_id' })
+  user: User;
 
-  @Column()
-  password: string;
-
-  @OneToMany(() => Cash, user_cash => user_cash.user)
-  user_cash: Cash;
+  @Column('decimal')
+  value: number;
 
   @CreateDateColumn()
   created_at: Date;
@@ -33,4 +32,4 @@ class User {
   updated_at: Date;
 }
 
-export default User;
+export default Cash;
